@@ -375,18 +375,39 @@ metrics_df = pd.DataFrame(metrics)
 optimal_idx = metrics_df["f1"].idxmax()
 optimal_threshold = metrics_df.loc[optimal_idx, "threshold"]
 
-# Para un producto de ALTO RIESGO, preferimos mayor precision
-# Usamos un threshold más conservador que maximice precision manteniendo recall aceptable
-high_precision_thresholds = metrics_df[metrics_df["precision"] >= 0.65]
-if len(high_precision_thresholds) > 0:
-    conservative_threshold = high_precision_thresholds.iloc[0]["threshold"]
-else:
-    conservative_threshold = 0.45
+# Para un producto de ALTO RIESGO, buscamos un threshold que balancee
+# captura de malos sin rechazar demasiados buenos.
+# Criterio: maximizar Youden's J (sensibilidad + especificidad - 1)
+from sklearn.metrics import roc_curve as sk_roc_curve
 
-recommended_threshold = conservative_threshold
+fpr_t, tpr_t, thresholds_t = sk_roc_curve(y_test, best_probs)
+youden_j = tpr_t - fpr_t
+youden_threshold = thresholds_t[np.argmax(youden_j)]
+
+# Buscar threshold que capture al menos 50% de malos aprobando al menos 50% de buenos
+recommended_threshold = youden_threshold
+for t in sorted(thresholds):
+    y_pred_t = (best_probs >= t).astype(int)
+    recall_t = recall_score(y_test, y_pred_t, zero_division=0)
+    approval_t = (y_pred_t == 0).sum() / len(y_test)
+    if recall_t >= 0.50 and approval_t >= 0.50:
+        recommended_threshold = t
+        break
+
 y_pred_final = (best_probs >= recommended_threshold).astype(int)
 
 print(f"   Threshold F1-max: {optimal_threshold:.2f}")
+print(f"   Threshold Youden's J: {youden_threshold:.2f}")
+print(f"   Threshold recomendado (alto riesgo): {recommended_threshold:.2f}")
+print(
+    f"   Tasa de aprobación: {metrics_df[metrics_df['threshold'] == recommended_threshold]['approval_rate'].values[0] * 100:.1f}%"
+)
+print(
+    f"   Precision a {recommended_threshold:.2f}: {precision_score(y_test, y_pred_final):.4f}"
+)
+print(
+    f"   Recall a {recommended_threshold:.2f}: {recall_score(y_test, y_pred_final):.4f}"
+)
 print(f"   Threshold recomendado (alto riesgo): {recommended_threshold:.2f}")
 print(
     f"   Tasa de aprobación: {metrics_df[metrics_df['threshold'] == recommended_threshold]['approval_rate'].values[0] * 100:.1f}%"
