@@ -38,6 +38,9 @@ df = pd.read_excel("ModelosCompetencia.xlsx")
 print(f"   Registros: {df.shape[0]}")
 print(f"   Columnas: {list(df.columns)}")
 
+# Convertir fecha a datetime para cálculo de PSI temporal
+df["Fecha Estudio"] = pd.to_datetime(df["Fecha Estudio"])
+
 # Limpiar puntajes (PuntajeXY tiene "." como missing)
 df["PuntajeXY"] = pd.to_numeric(df["PuntajeXY"], errors="coerce")
 
@@ -493,11 +496,11 @@ Registros:               {len(df):<20} {len(df_clean):<20}
 Tasa Default:            {df["Default"].mean() * 100:<20.2f}% {df_clean["Default"].mean() * 100:.2f}%
 """)
 
-winner = "AB" if auc_ab_direction > auc_xy_direction else "XY"
-winner_auc = max(auc_ab_direction, auc_xy_direction)
-
-print(f"\nRECOMENDACIÓN: Contratar al Proveedor {winner}")
-print(f"Justificación: Mayor capacidad discriminante (AUC={winner_auc:.4f})")
+# Both models have AUC ~0.50, equivalent to random
+print(f"\nRECOMENDACIÓN: No contratar a ninguno de los dos proveedores.")
+print(f"Justificación: Ambos modelos tienen un poder discriminante equivalente al azar (AUC ≈ 0.50).")
+print(f"Proveedor AB AUC: {auc_ab_direction:.4f}, Proveedor XY AUC: {auc_xy_direction:.4f}")
+print(f"La inversión en estos proveedores no generaría valor agregado respecto a una selección aleatoria.")
 
 # Guardar resultados
 competitor_results = {
@@ -509,7 +512,7 @@ competitor_results = {
     "gini_xy": gini_xy,
     "psi_ab": psi_ab,
     "psi_xy": psi_xy if not np.isnan(psi_xy) else None,
-    "recommended_provider": winner,
+    "recommended_provider": "Ninguno",
     "records_ab": len(df),
     "records_xy": len(df_clean),
     "default_rate_ab": df["Default"].mean(),

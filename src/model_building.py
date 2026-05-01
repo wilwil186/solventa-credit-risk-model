@@ -90,10 +90,13 @@ for i, v in enumerate([df[target].value_counts()[0], df[target].value_counts()[1
     )
 
 # 3b. Correlaciones numéricas
-numeric_cols = df.select_dtypes(include=[np.number]).columns.drop(
-    ["ID", "FFECHA", target]
-)
-corr = df[numeric_cols.tolist() + [target]].corr()[target].sort_values(ascending=False)
+numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+# Eliminar target y ID si están presentes (FFECHA no es numérica, no está en la lista)
+to_drop = [target]
+if "ID" in numeric_cols:
+    to_drop.append("ID")
+numeric_cols = [col for col in numeric_cols if col not in to_drop]
+corr = df[numeric_cols + [target]].corr()[target].sort_values(ascending=False)
 
 colors = ["#e74c3c" if c > 0 else "#3498db" for c in corr.drop(target)]
 axes[1].barh(range(len(corr) - 1), corr.drop(target).values, color=colors)

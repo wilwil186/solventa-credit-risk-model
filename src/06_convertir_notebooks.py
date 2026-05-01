@@ -111,5 +111,5 @@ def py_to_ipynb_better(py_file, ipynb_file):
 
 
 if __name__ == "__main__":
-    py_to_ipynb_better("src/model_building.py", "src/01_model_building.ipynb")
-    py_to_ipynb_better("src/competitor_analysis.py", "src/02_competitor_analysis.ipynb")
+    py_to_ipynb_better("src/model_building.py", "src/02_modelo_predictivo_interno.ipynb")
+    py_to_ipynb_better("src/competitor_analysis.py", "src/03_evaluacion_proveedores.ipynb")

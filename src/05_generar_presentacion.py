@@ -122,7 +122,7 @@ def add_header_bar(slide, title_text):
     add_shape(slide, Inches(0), Inches(1.2), prs.slide_width, Inches(0.05), BLUE)
 
 
-def add_slide_number(slide, num, total=9):
+def add_slide_number(slide, num, total=10):
     add_text_box(
         slide,
         Inches(12.2),
