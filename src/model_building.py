@@ -32,6 +32,7 @@ from sklearn.metrics import (
     recall_score,
 )
 from sklearn.calibration import calibration_curve
+from sklearn.preprocessing import StandardScaler
 import pickle
 import os
 
@@ -178,14 +179,13 @@ df_model = df.copy()
 
 # Feature engineering
 # Ratio de endeudamiento
-df_model["Debt_to_Income"] = df_model["Obligaciones_SistemaFro"] / (
-    df_model["Ingresos"] + 1
-)
+income = df_model["Ingresos"].replace(0, df_model["Ingresos"].replace(0, np.nan).median())
+df_model["Debt_to_Income"] = df_model["Obligaciones_SistemaFro"] / income
 # Ratio gastos/ingresos
-df_model["Expense_Ratio"] = df_model["GastosFamiliares"] / (df_model["Ingresos"] + 1)
+df_model["Expense_Ratio"] = df_model["GastosFamiliares"] / income
 # Experiencia relativa
 df_model["Experience_to_Age"] = df_model["TiempoActividadAnios"] / (
-    df_model["Edad"] + 1
+    df_model["Edad"].replace(0, df_model["Edad"].replace(0, np.nan).median())
 )
 # Antiguedad como cliente
 df_model["Cliente_Years"] = df_model["TiempoClienteMeses"] / 12
@@ -244,6 +244,11 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.25, random_state=42, stratify=y
 )
 
+# Escalar features para Logistic Regression (coeficientes comparables)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
 print(f"   Train: {len(X_train)} registros ({y_train.mean() * 100:.1f}% mora)")
 print(f"   Test:  {len(X_test)} registros ({y_test.mean() * 100:.1f}% mora)")
 
@@ -277,8 +282,8 @@ models = {
 
 results = {}
 for name, model in models.items():
-    model.fit(X_train, y_train)
-    y_prob = model.predict_proba(X_test)[:, 1]
+    model.fit(X_train_scaled, y_train)
+    y_prob = model.predict_proba(X_test_scaled)[:, 1]
     auc = roc_auc_score(y_test, y_prob)
     results[name] = {"model": model, "y_prob": y_prob, "auc": auc}
     print(f"   {name}: ROC-AUC = {auc:.4f}")
@@ -332,6 +337,7 @@ print("\n[7] Analizando importancia de variables...")
 if hasattr(best_model, "feature_importances_"):
     importances = best_model.feature_importances_
 elif hasattr(best_model, "coef_"):
+    # Para Logistic Regression con datos escalados, los coeficientes son comparables
     importances = np.abs(best_model.coef_[0])
 else:
     importances = np.zeros(len(feature_cols))
@@ -399,18 +405,8 @@ for t in sorted(thresholds):
 
 y_pred_final = (best_probs >= recommended_threshold).astype(int)
 
-print(f"   Threshold F1-max: {optimal_threshold:.2f}")
+print(f"\n   Threshold F1-max: {optimal_threshold:.2f}")
 print(f"   Threshold Youden's J: {youden_threshold:.2f}")
-print(f"   Threshold recomendado (alto riesgo): {recommended_threshold:.2f}")
-print(
-    f"   Tasa de aprobación: {metrics_df[metrics_df['threshold'] == recommended_threshold]['approval_rate'].values[0] * 100:.1f}%"
-)
-print(
-    f"   Precision a {recommended_threshold:.2f}: {precision_score(y_test, y_pred_final):.4f}"
-)
-print(
-    f"   Recall a {recommended_threshold:.2f}: {recall_score(y_test, y_pred_final):.4f}"
-)
 print(f"   Threshold recomendado (alto riesgo): {recommended_threshold:.2f}")
 print(
     f"   Tasa de aprobación: {metrics_df[metrics_df['threshold'] == recommended_threshold]['approval_rate'].values[0] * 100:.1f}%"
@@ -553,6 +549,7 @@ with open("output/model.pkl", "wb") as f:
     pickle.dump(
         {
             "model": best_model,
+            "scaler": scaler,
             "feature_cols": feature_cols,
             "label_encoders": label_encoders,
             "threshold": recommended_threshold,

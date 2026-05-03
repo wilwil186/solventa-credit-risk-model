@@ -422,10 +422,12 @@ def calculate_lift(df, score_col, target_col, n_bins=10):
     """Calcula lift por deciles"""
     df_lift = df[[score_col, target_col]].copy()
     if roc_auc_score(df_lift[target_col], df_lift[score_col]) < 0.5:
+        # Score invertido: mayor score = menor riesgo, invertir etiquetas
         df_lift["rank"] = pd.qcut(
-            df_lift[score_col], n_bins, labels=range(n_bins, 0, -1), duplicates="drop"
+            -df_lift[score_col], n_bins, labels=range(1, n_bins + 1), duplicates="drop"
         )
     else:
+        # Score normal: mayor score = mayor riesgo
         df_lift["rank"] = pd.qcut(
             df_lift[score_col], n_bins, labels=range(n_bins, 0, -1), duplicates="drop"
         )

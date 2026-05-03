@@ -500,12 +500,12 @@ metrics_table = [
     [
         "Precision",
         f"{mm['precision']:.4f}",
-        'De los rechazados, {mm["precision"]*100:.0f}% son realmente morosos',
+        f"De los rechazados, {mm['precision']*100:.0f}% son realmente morosos",
     ],
     [
         "Recall",
         f"{mm['recall']:.4f}",
-        'Se captura {mm["recall"]*100:.0f}% de los morosos',
+        f"Se captura {mm['recall']*100:.0f}% de los morosos",
     ],
     ["F1-Score", f"{mm['f1']:.4f}", "Balance entre precision y recall"],
     [

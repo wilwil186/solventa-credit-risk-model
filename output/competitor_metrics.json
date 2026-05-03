@@ -258,82 +258,82 @@
   ],
   "lift_ab": [
     {
-      "rank": 10,
-      "default_rate": 0.6034063260340633,
-      "count": 12741,
-      "lift": 0.9982615544614047,
-      "cumulative_pct": 11.2,
-      "cumulative_defaults": 18.47217792211558
-    },
-    {
-      "rank": 9,
-      "default_rate": 0.6069593874188233,
-      "count": 10317,
-      "lift": 1.0041396575372532,
-      "cumulative_pct": 20.2,
-      "cumulative_defaults": 33.429988111462286
-    },
-    {
-      "rank": 8,
-      "default_rate": 0.6015006932550363,
-      "count": 12261,
-      "lift": 0.9951089193991786,
-      "cumulative_pct": 31.0,
-      "cumulative_defaults": 51.20625163104938
-    },
-    {
-      "rank": 7,
-      "default_rate": 0.6066087795465509,
-      "count": 12438,
-      "lift": 1.0035596199332701,
-      "cumulative_pct": 41.9,
-      "cumulative_defaults": 69.23913358656885
-    },
-    {
-      "rank": 6,
-      "default_rate": 0.6054755762669551,
-      "count": 12017,
-      "lift": 1.001684874478006,
-      "cumulative_pct": 52.4,
-      "cumulative_defaults": 86.66164061820396
-    },
-    {
-      "rank": 5,
-      "default_rate": 0.6112640062905446,
-      "count": 10174,
-      "lift": 1.0112611200424473,
-      "cumulative_pct": 61.3,
-      "cumulative_defaults": 101.41212630846405
-    },
-    {
-      "rank": 4,
-      "default_rate": 0.6055335968379446,
-      "count": 10120,
-      "lift": 1.0017808623768525,
-      "cumulative_pct": 70.2,
-      "cumulative_defaults": 116.08432162843971
-    },
-    {
-      "rank": 3,
-      "default_rate": 0.6055703460987099,
-      "count": 14649,
-      "lift": 1.001841659509057,
-      "cumulative_pct": 83.0,
-      "cumulative_defaults": 137.32275930060604
+      "rank": 1,
+      "default_rate": 0.5999040153575428,
+      "count": 12502,
+      "lift": 0.9924674121905914,
+      "cumulative_pct": 11.0,
+      "cumulative_defaults": 18.12567054252327
     },
     {
       "rank": 2,
-      "default_rate": 0.6001386802265111,
-      "count": 8653,
-      "lift": 0.9928556363552492,
-      "cumulative_pct": 90.6,
-      "cumulative_defaults": 149.86806622785397
+      "default_rate": 0.5997932719413644,
+      "count": 10642,
+      "lift": 0.9922842008286769,
+      "cumulative_pct": 20.3,
+      "cumulative_defaults": 33.55467277524865
     },
     {
-      "rank": 1,
-      "default_rate": 0.5975416705466058,
-      "count": 10739,
-      "lift": 0.9885592032418395,
+      "rank": 3,
+      "default_rate": 0.6024969794603302,
+      "count": 14898,
+      "lift": 0.9967571523942185,
+      "cumulative_pct": 33.3,
+      "cumulative_defaults": 55.15411604372662
+    },
+    {
+      "rank": 4,
+      "default_rate": 0.6112335584784927,
+      "count": 14065,
+      "lift": 1.0112107478821342,
+      "cumulative_pct": 45.7,
+      "cumulative_defaults": 75.54585785948328
+    },
+    {
+      "rank": 5,
+      "default_rate": 0.6101876675603217,
+      "count": 5595,
+      "lift": 1.0094804499904422,
+      "cumulative_pct": 50.6,
+      "cumulative_defaults": 83.65761011395598
+    },
+    {
+      "rank": 6,
+      "default_rate": 0.6034008502125532,
+      "count": 11997,
+      "lift": 0.9982524953881786,
+      "cumulative_pct": 61.1,
+      "cumulative_defaults": 101.05112071215241
+    },
+    {
+      "rank": 7,
+      "default_rate": 0.6105986445783133,
+      "count": 10624,
+      "lift": 1.0101603609213146,
+      "cumulative_pct": 70.4,
+      "cumulative_defaults": 116.45402615478295
+    },
+    {
+      "rank": 8,
+      "default_rate": 0.5990880689014608,
+      "count": 11843,
+      "lift": 0.9911175291309304,
+      "cumulative_pct": 80.8,
+      "cumulative_defaults": 133.62426421550148
+    },
+    {
+      "rank": 9,
+      "default_rate": 0.6081593927893738,
+      "count": 10540,
+      "lift": 1.0061249188361217,
+      "cumulative_pct": 90.0,
+      "cumulative_defaults": 148.90538463768956
+    },
+    {
+      "rank": 10,
+      "default_rate": 0.6027361220731386,
+      "count": 11403,
+      "lift": 0.9971527844353493,
       "cumulative_pct": 100.0,
       "cumulative_defaults": 165.43770116275698
     }
