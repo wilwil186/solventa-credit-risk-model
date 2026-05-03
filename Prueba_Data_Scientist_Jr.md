@@ -58,9 +58,3 @@ La presentación debe justificar las respuestas de los puntos 1 y 2.
 Esta prueba debe ser realizada de manera individual, con base en su conocimiento, criterio técnico y experiencia. Durante la presentación se validará la comprensión del análisis y de las decisiones tomadas.
 
 **¡Muchos éxitos!**
-
----
-
-*Edificio Porta 100 TV 22 #98-82 Piso 4*
-*Bogotá, Colombia*
-*www.solventa.co*

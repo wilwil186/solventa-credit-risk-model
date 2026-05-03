@@ -212,7 +212,4 @@ jupyter notebook src/
 2. **Modelo interno viable:** Con AUC=0.61, el modelo interno es mejor que los proveedores evaluados (AUC≈0.50), aunque aún necesita mejores datos.
 3. **Proveedores inviables:** Ninguno de los dos proveedores demostró capacidad discriminante significativa.
 4. **Urgencia de datos externos:** La principal limitación es la falta de información de buró de crédito y datos transaccionales.
-
----
-
-*Edificio Porta 100 TV 22 #98-82 Piso 4 | Bogotá, Colombia | www.solventa.co*
+s
