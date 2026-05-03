@@ -15,11 +15,8 @@ solventa-credit-risk-model/
 │   ├── 01_eda_preparacion_datos.ipynb      # EDA y preparación de datos
 │   ├── 02_modelo_predictivo_interno.ipynb  # Parte 1: Modelo predictivo
 │   ├── 03_evaluacion_proveedores.ipynb      # Parte 2: Evaluación de proveedores
-│   ├── model_building.py                     # Script: modelo predictivo (genera 01/02)
-│   ├── competitor_analysis.py               # Script: evaluación proveedores (genera 03)
-│   ├── 04_generar_reporte_pdf.py            # Generador de reporte PDF
-│   ├── 05_generar_presentacion.py           # Generador de presentación ejecutiva
-│   └── 06_convertir_notebooks.py           # Conversor .py a .ipynb (obsoleto)
+│   ├── 04_generar_reporte_pdf.ipynb        # Generador de reporte PDF
+│   └── 05_generar_presentacion.ipynb       # Generador de presentación ejecutiva
 ├── output/
 │   ├── analisis_completo.pdf          # Documento PDF con análisis completo
 │   ├── presentacion_ejecutiva.pptx    # Presentación ejecutiva (10 slides)
